@@ -27,16 +27,10 @@ if __name__ == "__main__":
 
     # Extracting headers and code
     headers = data[:0x78]
-    code = data[0x1000:0x105f]
+    code = data[0x1000:0x103c]
     
     binary = list(headers + code)
     binary = correct_headers(binary)
-
-    # Modifying pointers to nbr
-    binary[0x85] = 0
-    binary[0x84] = 0xd7
-    binary[0xb0] = 0
-    binary[0xaf] = 0xd1
 
     binary = bytes(binary)
     with open("counter.bin", "wb") as f:
