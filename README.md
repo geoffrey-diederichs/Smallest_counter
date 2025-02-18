@@ -131,7 +131,7 @@ When looking at our [binary](/01_Assembly/counter.bin) using `xxd`, it becomes v
 
 Our program is filled with huge sections of null bytes and unnecessary data that our binary doesn't need. Those are added to executables by default when they're compiled, but to execute itself our program only needs two sections :
 
-- the program headers containing information that the operation system will use to determine that this is an ELF executable. It contains informations such as the magic number (a signature to identify the file type), and the entry point (a pointer to the memory address where execution should start).
+- the program headers containing information that the operating system will use to determine that this is an ELF executable. It contains informations such as the magic number (a signature to identify the file type), and the entry point (a pointer to the memory address where execution should start).
 
 - `.text` : the section containing our code.
 
