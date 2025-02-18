@@ -2,7 +2,7 @@
 
 In this repository, you'll find everything I did to try and make the smallest possible ELF executable in x86 that can count up to 10000.
 
-At first when I heard about this challenge, I didn't think much of it. But it turns out it's a great way to learn more about elf file structure, assembly and low level in general (I recommend you try it on your own if this is something you'd like to learn more about).
+At first when I heard about this challenge, I didn't think much of it. But it turns out it's a great way to learn more about ELF file structure, assembly and low level in general (I recommend you try it on your own if this is something you'd like to learn more about).
 
 ## Content
 
