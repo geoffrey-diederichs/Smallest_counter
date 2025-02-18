@@ -1,4 +1,4 @@
-def correct_headers(binary: list) -> list:    
+def fix_headers(binary: list) -> list:    
     # Permissions
     binary[0x44] = 0x7
 
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     binary = list(headers + code)
 
     # Modifying headers
-    binary = correct_headers(binary)
+    binary = fix_headers(binary)
 
     binary = bytes(binary)
     with open("counter.bin", "wb") as f:

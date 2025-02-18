@@ -1,4 +1,4 @@
-def correct_headers(binary: list) -> list:    
+def fix_headers(binary: list) -> list:    
     # Permissions
     binary[0x44] = 0x7
 
@@ -27,11 +27,11 @@ if __name__ == "__main__":
 
     # Extracting headers and code
     headers = data[:0x78]
-    code = data[0x1000:0x105f]
+    code = data[0x1000:0x105e]
     binary = list(headers + code)
 
     # Modifying headers
-    binary = correct_headers(binary)
+    binary = fix_headers(binary)
 
     # Modifying pointers to nbr
     binary[0x85] = 0

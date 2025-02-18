@@ -1,4 +1,4 @@
-def correct_headers(binary: list) -> list:    
+def fix_headers(binary: list) -> list:    
     # Permissions
     binary[0x44] = 0x7
 
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     binary = list(headers + code)
 
     # Modifying headers
-    binary = correct_headers(binary)
+    binary = fix_headers(binary)
 
     # Inserting code in the header section that can be modified + replacing them with jumps
     binary = create_jump(binary, 0x76, 0x7, 7) # Winning 5 bytes
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     binary = create_jump(binary, 0x98-15, 0x50, 6) # Winning 4 bytes
     binary = create_jump(binary, 0xa6-19, 0x68, 6) # Winning 4 bytes
 
-    # Correcting the program's hardcoded jumps
+    # Fixing the program's hardcoded jumps
     binary[0x84] = 0xf8
     binary[0x69] = 0xa
 
