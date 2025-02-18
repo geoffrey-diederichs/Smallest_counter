@@ -305,7 +305,7 @@ The main source of optimization during this step, was to use partial registers. 
 401022:	88 17                	mov    %dl,(%rdi)
 ```
 
-The second move is one byte smaller then the first one because we only used `dl`, which are the lower byte of `rdx`. Using partial register we can go down to 4, 2 or 1 byte long registers.
+The second move is one byte smaller then the first one because we only used `dl`, which is the lower byte of `rdx`. Using partial register we can go down to 4, 2 or 1 byte long registers.
 
 We can also optimize the instructions used. For example  `bf 01 00 00 00   mov $0x1,%edi` is 5 bytes long, while `49 ff c0  inc %r8` is only 3 bytes long. So if `edi` is null, and we could use `inc %edi`, we'd cut 2 bytes.
 
