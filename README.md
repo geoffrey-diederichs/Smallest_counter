@@ -237,7 +237,9 @@ def fix_headers(binary: list) -> list:
     return binary
 ```
 
-Another issue was some of the hardcoded pointers inside the binary that need to be fixed. But putting all of this together in [this script](/02_Remove_sections/minimize.py), we get :
+Another issue worth mentioning was some of the hardcoded pointers inside the binary that need to be fixed. 
+
+By putting all of this together in [this script](/02_Remove_sections/minimize.py), we get :
 
 ```
 $ cat run.sh 
@@ -298,14 +300,14 @@ Disassembly of section .text:
   401055:	0f 05                	syscall
 ```
 
-The main source of optimization during this step, was to use partial registers. As you can see with thoses two `mov` instructions :
+The main source of optimization during this step, was to use partial registers. As you can see with these two `mov` instructions :
 
 ```console
 401000:	4c 89 c0             	mov    %r8,%rax
 401022:	88 17                	mov    %dl,(%rdi)
 ```
 
-The second move is one byte smaller then the first one because we only used `dl`, which is the lower byte of `rdx`. Using partial register we can go down to 4, 2 or 1 byte long registers.
+The second `mov` is one byte smaller then the first one because we only used `dl`, which is the lower byte of `rdx`. Using partial register we can go down to 4, 2 or 1 byte long registers.
 
 We can also optimize the instructions used. For example  `bf 01 00 00 00   mov $0x1,%edi` is 5 bytes long, while `49 ff c0  inc %r8` is only 3 bytes long. So if `edi` is null, and we could use `inc %edi`, we'd cut 2 bytes off our binary.
 
@@ -404,7 +406,7 @@ gef➤  file 04_Headers_overlap/counter.bin
 
 This made it pretty painfull.
 
-Also since you need to 2 bytes for a `jmp` instruction, only the sections of the header that we can modify longer than 4 bytes are worth using. So by using [this script](/05_Maximizing_headers/minimize.py) that's inserting code inside the headers, adding the required `jmp` instructions and modifying some of the hardcoded values that needs to be (since we're modifying the execution flow), we get :
+Also since you need 2 bytes for a `jmp` instruction, only the sections longer than 4 bytes are worth using. So by using [this script](/05_Maximizing_headers/minimize.py) that's inserting code inside the headers, adding the required `jmp` instructions and modifying some of the hardcoded values that needs to be (since we're modifying the execution flow), we get :
 
 ```console
 $ cat run.sh 
