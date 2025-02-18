@@ -404,7 +404,7 @@ gef➤  file 04_Headers_overlap/counter.bin
 
 This made it pretty painfull.
 
-Also since you need to 2 bytes for a `jmp` instruction, only the sections of the header that we can modify longer than 4 bytes are worth using. So by using [this script](/05_Maximizing_headers/minimize.py) that's inserting code inside the headers, adding the required `jmp` instructions and modifying some of the hardcoded values that needs to be (since we're modifying the execution code), we get :
+Also since you need to 2 bytes for a `jmp` instruction, only the sections of the header that we can modify longer than 4 bytes are worth using. So by using [this script](/05_Maximizing_headers/minimize.py) that's inserting code inside the headers, adding the required `jmp` instructions and modifying some of the hardcoded values that needs to be (since we're modifying the execution flow), we get :
 
 ```console
 $ cat run.sh 
