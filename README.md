@@ -318,7 +318,7 @@ $ wc -c counter.bin
 180 counter.bin
 ```
 
-You can see [here](/03_Optimize/out.txt) that our code worked. Our binary is now 180 bytes big, and with the step we've cut 34 bytes from it. But we're not done yet.
+You can see [here](/03_Optimize/out.txt) that our code worked. Our binary is now 180 bytes big, and with this step we've cut 34 bytes from it. But we're not done yet.
 
 ## [Headers overlap](/04_Headers_overlap/)
 
