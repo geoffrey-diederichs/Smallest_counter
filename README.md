@@ -322,7 +322,7 @@ You can see [here](/03_Optimize/out.txt) that our code worked. Our binary is now
 
 ## [Headers overlap](/04_Headers_overlap/)
 
-I didn't go into much details about it, but your binary actually has 2 headers :
+I didn't go into much details about it, but this binary actually has 2 headers :
 
 - the program header that tells the operating system how to creat the process image.
 
