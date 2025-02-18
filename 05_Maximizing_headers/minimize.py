@@ -50,12 +50,12 @@ if __name__ == "__main__":
     binary = correct_headers(binary)
 
     # Inserting code in the header section that can be modified + replacing them with jumps
-    binary = create_jump(binary, 0x76, 0x7, 7)
-    binary = create_jump(binary, 0x84-5, 0x28, 12)
-    binary = create_jump(binary, 0x98-15, 0x50, 6)
-    binary = create_jump(binary, 0xa6-19, 0x68, 6)
+    binary = create_jump(binary, 0x76, 0x7, 7) # Winning 5 bytes
+    binary = create_jump(binary, 0x84-5, 0x28, 12) # Winning 10 bytes
+    binary = create_jump(binary, 0x98-15, 0x50, 6) # Winning 4 bytes
+    binary = create_jump(binary, 0xa6-19, 0x68, 6) # Winning 4 bytes
 
-    # Modify the program's hardcoded jumps
+    # Correcting the program's hardcoded jumps
     binary[0x84] = 0xf8
     binary[0x69] = 0xa
 
