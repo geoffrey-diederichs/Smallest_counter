@@ -324,7 +324,7 @@ You can see [here](/03_Optimize/out.txt) that our code worked. Our binary is now
 
 I didn't go into much details about it, but this binary actually has 2 headers :
 
-- the program header that tells the operating system how to creat the process image.
+- the program header that tells the operating system how to create the process image.
 
 - the section header that describes the sections within the executable.
 
