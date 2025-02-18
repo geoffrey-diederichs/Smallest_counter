@@ -9,7 +9,7 @@ def correct_headers(binary: list) -> list:
     # Start of program headers
     binary[0x20] = 0x38
 
-    # Section headers
+    # Start of section headers
     binary[0x29] = 0
     binary[0x28] = 0
 

@@ -6,7 +6,7 @@ def correct_headers(binary: list) -> list:
     binary[0x18] = 0x78
     binary[0x19] = 0
 
-    # Section headers
+    # Start of section headers
     binary[0x29] = 0
     binary[0x28] = 0
 
@@ -28,8 +28,9 @@ if __name__ == "__main__":
     # Extracting headers and code
     headers = data[:0x78]
     code = data[0x1000:0x105f]
-    
     binary = list(headers + code)
+
+    # Modifying headers
     binary = correct_headers(binary)
 
     # Modifying pointers to nbr
