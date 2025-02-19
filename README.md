@@ -14,7 +14,7 @@ At first when I heard about this challenge, I didn't think much of it. But it tu
 
 ## [Coding in assembly](/01_Assembly/)
 
-The first thing to determine when starting this challenge is obviously the language you'll work with. C being one of the lighter programming language, it could be an option to consider :
+The first thing to determine when starting this challenge is obviously the language you'll work with. C being one of the lighter programming languages, it could be an option to consider :
 
 ```console
 $ cat hello.c 
@@ -93,11 +93,11 @@ $ wc -c counter.bin
 8872 counter.bin
 ```
 
-Our binary is 8000 bytes big. If you've done low-level before, this  could seem very strange to you. Because even if we're being generous, the code we wrote couldn't possible represent more than a few hundred bytes. Which means we'll have to go deeper and see what's going on inside our binary.
+Our binary is 8000 bytes big. If you've done low-level before, this  could seem very strange to you. Because even if we're being generous, the code we wrote couldn't possibly represent more than a few hundred bytes. Which means we'll have to go deeper and see what's going on inside our binary.
 
 ## [Remove unnecessary sections](/02_Remove_sections/)
 
-When looking at our [binary](/01_Assembly/counter.bin) using `xxd`, it becomes very obvious something's wrong :
+When looking at our [binary](/01_Assembly/counter.bin) using `xxd`, it becomes very obvious that something's wrong :
 
 ```hex
 000000f0: 0000 0000 0000 0000 0000 0000 0000 0000  ................
@@ -210,7 +210,7 @@ There is no dynamic section in this file.
 readelf: Error: Reading 168 bytes extends past end of file for program headers
 ```
 
-We can see a lot errors, which should have been anticipated. We changed the binary drastically, without changing anything in the headers : all of the information it contains such as the number of section, or the entry point is now invalid. To make this binary executale we'll need to fix the headers :
+We can see a lot errors, which should have been anticipated. We changed the binary drastically, without changing anything in the headers : all of the information it contains such as the number of section, or the entry point is now invalid. To make this binary executable we'll need to fix the headers :
 
 ```python
 def fix_headers(binary: list) -> list:    
@@ -257,11 +257,11 @@ $ wc -c counter.bin
 214 counter.bin
 ```
 
-As you can see [here](/02_Remove_sections/out.txt), our program still works and we got it down to 214 bytes. This is already very small, and we could call it a day, but there is still many ways to make it smaller.
+As you can see [here](/02_Remove_sections/out.txt), our program still works and we got it down to 214 bytes. This is already very small, and we could call it a day, but there are still many ways to make it smaller.
 
 ## [Optimizing the code](/03_Optimize/)
 
-By analysing our disassembled code, we can see that instructions each have their own opcodes and are different numbers of bytes long :
+By analysing our disassembled code, we can see that every instruction has an opcode of different length :
 
 ```console
 $ objdump -d 01_Assembly/counter.bin 
@@ -324,7 +324,7 @@ You can see [here](/03_Optimize/out.txt) that our code worked. Our binary is now
 
 ## [Headers overlap](/04_Headers_overlap/)
 
-I didn't go into much details about it, but this binary actually has 2 headers :
+I didn't go into much detail about it, but this binary actually has 2 headers :
 
 - the program header that tells the operating system how to create the process image.
 
@@ -339,7 +339,7 @@ $ wc -c counter.bin
 172 counter.bin
 ```
 
-As you can see [here](/04_Headers_overlap/out.txt), our program still works while we've cut it done to 172 bytes. But there's one last way to make it smaller.
+As you can see [here](/04_Headers_overlap/out.txt), our program still works while we've cut it down to 172 bytes. But there's one last way to make it smaller.
 
 ## [Maximizing headers space](/05_Maximizing_headers/)
 
@@ -397,14 +397,14 @@ $ ./can_modify.bin > out2.txt
 
 [can_modify.py](/05_Maximizing_headers/can_modify.py) replaces some bytes with `0xff` and writes it in [can_modify.bin](/05_Maximizing_headers/can_modify.bin). As you can see [here](/05_Maximizing_headers/out2.txt), our code is still working even with these bytes being modified. Meaning that we can replace these with snipets from our code, jump from our code to these and back afterwards.
 
-This step was by far the longest as you couldn't debug the binary. Since the last step where we overlapped the headers, most programs as GDB don't recognize the file as an ELF executable :
+This step was by far the longest as you couldn't debug the binary. Since the last step where we overlapped the headers, most programs such as GDB don't recognize the file as an ELF executable :
 
 ```gdb
 gef➤  file 04_Headers_overlap/counter.bin 
 "/home/geoffrey/Documents/Smallest_counter/04_Headers_overlap/counter.bin": not in executable format: file format not recognized
 ```
 
-This made it pretty painfull.
+This made it pretty painful.
 
 Also since you need 2 bytes for a `jmp` instruction, only the sections longer than 4 bytes are worth using. So by using [this script](/05_Maximizing_headers/minimize.py) that's inserting code inside the headers, adding the required `jmp` instructions and modifying some of the hardcoded values that needs to be (since we're modifying the execution flow), we get :
 
