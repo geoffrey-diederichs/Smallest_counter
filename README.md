@@ -93,7 +93,7 @@ $ wc -c counter.bin
 8872 counter.bin
 ```
 
-Our binary is 8000 bytes big. If you've ever done low-level before, this will immediatly seem very strange to you. Because even if we're being generous, the code we wrote couldn't possible be more than a few hundred bytes. Which means we'll have to go deeper and see what's going on inside our binary.
+Our binary is 8000 bytes big. If you've done low-level before, this  could seem very strange to you. Because even if we're being generous, the code we wrote couldn't possible represent more than a few hundred bytes. Which means we'll have to go deeper and see what's going on inside our binary.
 
 ## [Remove unnecessary sections](/02_Remove_sections/)
 
@@ -129,7 +129,7 @@ When looking at our [binary](/01_Assembly/counter.bin) using `xxd`, it becomes v
 00000290: 0000 0000 0000 0000 0000 0000 0000 0000  ................
 ```
 
-Our program is filled with huge sections of null bytes and unnecessary data that our binary doesn't need. Those are added to executables by default when they're compiled, but to execute itself our program only needs two sections :
+Our program is filled with huge sections of null bytes and unnecessary data, those are added to executables by default when they're compiled. But in our case, it isn't needed to run our code. Our program only needs two sections
 
 - the program headers containing information that the operating system will use to determine that this is an ELF executable. It contains informations such as the magic number (a signature to identify the file type), and the entry point (a pointer to the memory address where execution should start).
 
@@ -309,7 +309,7 @@ The main source of optimization during this step, was to use partial registers. 
 
 The second `mov` is one byte smaller then the first one because we only used `dl`, which is the lower byte of `rdx`. Using partial register we can go down to 4, 2 or 1 byte long registers.
 
-We can also optimize the instructions used. For example  `bf 01 00 00 00   mov $0x1,%edi` is 5 bytes long, while `49 ff c0  inc %r8` is only 3 bytes long. So if `edi` is null, and we could use `inc %edi`, we'd cut 2 bytes off our binary.
+We can also optimize the instructions used. For example  `bf 01 00 00 00   mov $0x1,%edi` is 5 bytes long, while `49 ff c0  inc %r8` is only 3 bytes long. So if `edi` is null, we could use `inc %edi` and cut 2 bytes off our binary.
 
 Finally, we can try and optimize as much as possible the algorithm used to limit the number of instructions called. By doing all of this, we get [this code](/03_Optimize/counter.asm), which gives us :
 
@@ -320,7 +320,7 @@ $ wc -c counter.bin
 180 counter.bin
 ```
 
-You can see [here](/03_Optimize/out.txt) that our code worked. Our binary is now 180 bytes big, and with this step we've cut 34 bytes from it. But we're not done yet.
+You can see [here](/03_Optimize/out.txt) that our code worked. Our binary is now 180 bytes big, and with this step we've cut 34 bytes from it. But we haven't looked at our headers yet.
 
 ## [Headers overlap](/04_Headers_overlap/)
 
